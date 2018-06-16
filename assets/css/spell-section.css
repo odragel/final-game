@@ -1,0 +1,61 @@
+.spell-section{
+    margin: 0 auto;
+    border: 3px solid lightgrey;
+    border-radius: 5px;
+    height: 200px;
+    width: 560px;
+    padding: 5px;
+
+}
+
+.spells{
+    position:relative;
+    left: 0px;
+    top: 3px;
+}
+
+.spells li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    position: absolute;
+    top: 0;
+    cursor: pointer;
+}
+
+.spells li{
+    height: 128px;
+    display: block;
+}
+
+#spellFire {
+    left:0px;
+    width: 128px;
+    background: url('../images/icons.png') 0 0;
+}
+
+#spellLight {
+    left:145px;
+    width: 128px;
+    background: url('../images/icons.png') -140px 0;
+}
+
+#spellWind {
+    left:290px;
+    width: 128px;
+    background: url('../images/icons.png') -282px 0;
+}
+
+#spellWater {
+    left: 435px;
+    width: 128px;
+    background: url('../images/icons.png') -426px 0;
+}
+
+/*
+#spellForce {
+    left:580px;
+    width: 128px;
+    background: url('../images/icons.png') -567px 0;
+}
+*/

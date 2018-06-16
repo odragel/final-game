@@ -1,0 +1,137 @@
+{
+  "body":[
+    {
+      "name":"zombie",
+      "width": "310",
+      "height": "184",
+      "xCoord":"0",
+      "yCoord":"312",
+      "forHeadX":"87",
+      "forLegsX":"65",
+      "forLegsY":"127",
+      "forWeaponX":"273",
+      "forWeaponY":"29"
+    },
+    {
+      "name": "robot",
+      "width": "289",
+      "height": "148",
+      "xCoord":"353",
+      "yCoord":"303",
+      "forHeadX":"148",
+      "forLegsX":"142",
+      "forLegsY":"130",
+      "forWeaponX":"271",
+      "forWeaponY":"93"
+    },
+    {
+      "name": "mummy",
+      "width": "293",
+      "height": "190",
+      "xCoord":"686",
+      "yCoord":"302",
+      "forHeadX":"115",
+      "forLegsX":"117",
+      "forLegsY":"138",
+      "forWeaponX":"271",
+      "forWeaponY":"97"
+    }
+  ],
+  "head":[
+    {
+      "name": "Frank",
+      "width": "150",
+      "height": "120",
+      "xCoord":"0",
+      "yCoord":"112",
+      "deltaY":["8", "21", "8"]
+    },
+    {
+      "name": "Tom",
+      "width": "160",
+      "height": "150",
+      "xCoord":"162",
+      "yCoord":"85",
+      "deltaY":["10", "21", "8"]
+    },
+    {
+      "name": "Sam",
+      "width": "151",
+      "height": "148",
+      "xCoord":"326",
+      "yCoord":"89",
+      "deltaY":["5", "20", "8"]
+    },
+    {
+      "name": "Jack",
+      "width": "148",
+      "height": "120",
+      "xCoord":"500",
+      "yCoord":"118",
+      "deltaY":["8", "20", "8"]
+    },
+    {
+      "name": "Nat",
+      "width": "149",
+      "height": "180",
+      "xCoord":"669",
+      "yCoord":"58",
+      "deltaY":["8", "20", "8"]
+    },
+    {
+      "name": "Erick",
+      "width": "148",
+      "height": "154",
+      "xCoord":"831",
+      "yCoord":"81",
+      "deltaY":["8","17", "6"]
+    }
+  ],
+  "legs":[
+    {
+      "width": "143",
+      "height": "200",
+      "xCoord":"0",
+      "yCoord":"567",
+      "deltaX":["68", "68", "70"],
+      "deltaY":["3", "3", "2"]
+    },
+    {
+      "width": "182",
+      "height": "214",
+      "xCoord":"165",
+      "yCoord":"570",
+      "deltaX":["68", "68", "72"],
+      "deltaY":["3", "3", "3"]
+    },
+    {
+      "width": "116",
+      "height": "115",
+      "xCoord":"371",
+      "yCoord":"574",
+      "deltaX":["68", "68", "78"],
+      "deltaY":["3", "3", "7"]
+    }
+
+  ],
+  "weapon": [
+    {
+      "name": "nasty",
+      "width": "103",
+      "height": "43",
+      "xCoord":"0",
+      "yCoord":"926",
+       "deltaY": ["0","40","20"]
+
+    },
+    {
+      "name": "baleful",
+      "width": "132",
+      "height": "114",
+      "xCoord":"161",
+      "yCoord":"853",
+      "deltaY":["40", "100", "90"]
+    }
+
+  ]
+}

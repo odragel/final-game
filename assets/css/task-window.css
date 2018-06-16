@@ -1,0 +1,17 @@
+.task-window article{
+    margin-bottom: 20px;
+}
+
+.task-window{
+    font-size:16px;
+    display: grid;
+    grid-template-columns: 1fr;
+    align-items: center;
+    justify-items: center;
+
+}
+
+.task-hint{
+    font-size:12px;
+    font-style: italic;
+}

@@ -1,0 +1,176 @@
+<html>
+<head>
+    <title>Match-match game</title>
+</head>
+<body>
+    <main>
+    <section class="greeting">
+        <h1>
+            we are so glad to see you, are you ready to play?
+        </h1>
+
+        <div class="rules">
+           This world is full of monsters, but be smart and you will win
+        </div>
+        <button id="idBtnStart" >Start</button>
+
+
+        <footer>
+            It was written by Olga Dragel
+        </footer>
+    </section>
+
+    <section class="registration not-displayed">
+        <h2>Hero, what is your name ?</h2>
+        <form id="registration-form" action="" method="" >
+            <div class="form-content">
+                <label for="nickName">Nickname:</label>
+                    <input type="name" id="nickName" placeholder="your nickname *" required/>
+            </div>
+        </form>
+        <button id="idBtnNewPlayer" type="button" form="registration-form">Log in</button>
+    </section>
+
+ <div class="game-container not-displayed">
+    <section class="game-window  not-displayed">
+        <header class="health">
+            <div class="player-health monster">
+                <span class="generated-name"></span>
+                <!--div class="rectangle monster"></div-->
+            </div>
+
+            <div class="player-health hero" >
+                <span class="hero-name"></span>
+                <!--div class="rectangle hero"></div-->
+            </div>
+        </header>
+
+
+        <main>
+            <canvas id="gameCanvas" width="1100" height="600"
+                    style="border:1px solid #000000;">
+            </canvas>
+        </main>
+        <!--footer>
+            <span>Click Enter to start</span>
+        </footer-->
+
+    </section>
+
+
+<div class="modal-window not-displayed">
+    <section class="monster-name not-displayed">
+        <span>Your enemy is <span class="generated-name"></span></span>
+        <button id="idBtnStartRound">I am ready</button>
+    </section>
+
+    <section id="spell-window" class="spell-section not-displayed">
+        <h2> Select the magic you lke</h2>
+        <ul class="spells">
+            <li id="spellFire"><a href=""></a></li>
+            <li id="spellLight"><a href=""></a></li>
+            <li id="spellWind"><a href=""></a></li>
+            <li id="spellWater"><a href=""></a></li>
+        </ul>
+    </section>
+
+    <section class="task-window not-displayed">
+
+        <article id="mathTask" class=" not-displayed">
+            <input id="firstMath" name="first" type="number" disabled
+                   value=""  />
+
+            <input id="symbolMath" name="symbol" type="text" disabled
+                   value=""  />
+
+            <input id="secondMath" name="second" type="number" disabled
+                   value=""  />
+        </article>
+
+
+        <article id="audioTask" class="not-displayed">
+            <button class="btnPlayAudio">Play Audio</button>
+        </article>
+
+
+        <article id="spellTask" class=" not-displayed">
+            <div class="spell-task-container">
+                <ul id="letters">
+                </ul>
+
+            </div>
+
+
+
+        </article>
+
+        <article id="translateTask" class=" not-displayed">
+            <input disabled id="translateKey" />
+
+        </article>
+
+
+        <div id="containerForAnswer" class="field-for-answer not-displayed">
+            <label for="inputAnswer" > YOUR ANSWER: </label>
+            <input id="inputAnswer" type="text"/>
+        </div>
+        <span class="task-hint"></span>
+        <button id="btnCheckAnswer" type="button">Check</button>
+    </section>
+
+    <section class="">
+
+    </section>
+
+    <section class="round-end not-displayed">
+        <article class="congratulations-text">
+            Congratulations your enemy <span class="generated-name"></span> is dead
+        </article>
+        <article class="congratulations-score">
+            Your score is <span class="hero-score"></span>
+        </article>
+        <button id="idBtnNewRound"> New round </button>
+        <button id="idBtnFinish"> Finish </button>
+    </section>
+
+
+
+</div>
+
+    </div>
+
+
+
+
+
+
+    <section class="game-over not-displayed">
+
+    </section>
+
+
+
+
+    <!--section class="game-congratulations not-displayed">
+        <h2>Congratulations you win !!!</h2>
+
+
+        <h2>TOP 10</h2>
+        <div >
+            <div class="scores-table">
+                <span class="header">Full name</span>
+                <span class="header">Level</span>
+                <span class="header">Spend time</span>
+            </div>
+            <div id="score-content" class="scores-table">
+            </div>
+        </div>
+    </section-->
+
+
+    </main>
+    <aside>
+
+    </aside>
+</body>
+</html>
