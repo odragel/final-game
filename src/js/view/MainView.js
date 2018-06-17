@@ -85,6 +85,12 @@ export class MainView{
         this.heroScore = document.querySelector('.hero-score');
         this.btnNewRound = document.querySelector('#idBtnNewRound');
         this.btnFinish = document.querySelector('#idBtnFinish');
+
+
+        this.gameFinish = document.querySelector('.game-finish');
+
+        this.score = document.querySelector('#score-content');
+        this.score.innerHTML='';
     }
 
     showRegistration(){
@@ -192,6 +198,25 @@ export class MainView{
     clearCanvas(){
         this.ctx.clearRect(0,0, this.canvasWidth, this.canvasHeight);
     }
+
+    showScore(scores){
+            this.gameContainer.classList.add('not-displayed');
+            this.gameFinish.classList.remove('not-displayed');
+            debugger;
+
+            scores.forEach((cur) => {
+                let span1 = document.createElement('span');
+                span1.textContent = cur.name;
+
+                let span2 = document.createElement('span');
+                span2.textContent = cur.score;
+
+                this.score.appendChild(span1);
+                this.score.appendChild(span2);
+            });
+
+        }
+
 
 
 

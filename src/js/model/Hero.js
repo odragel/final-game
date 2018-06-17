@@ -38,7 +38,7 @@ export class Hero {
     }
 
     draw(){
-        debugger;
+     //   debugger;
         this.ctx.drawImage(this.imgHero, this.leftCoord + this.frameWidth * this.curFrame , 0, this.frameWidth, this.height,
             this.left, this.top, this.width/this.numOfFrames, this.height);
     }
@@ -66,7 +66,7 @@ export class Hero {
     }
 
     animate(){
-        console.log("animate hero");
+      //  console.log("animate hero");
         this.animateRef = requestAnimationFrame(this.animate.bind(this));
 
         this.update();

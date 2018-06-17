@@ -69,7 +69,7 @@ export class MainController{
         if(this.mainView.registrationForm.checkValidity()){
             e.preventDefault();
         //   this.mainView.updateGameScreenHeader(this.curUser)
-            this.hero = new Hero(this.mainView, this.ctx, this.mainView.regNickName);
+            this.hero = new Hero(this.mainView, this.ctx, this.mainView.regNickName.value);
             this.mainView.showGameScreen();
         }
     }
@@ -199,8 +199,6 @@ export class MainController{
     }
 
     generateSpellTask(){
-
-
         this.task = vocabluary.words[Math.floor(Math.random() * (vocabluary.words.length))].key;
         this.curAnswer = this.task;
 
@@ -214,19 +212,14 @@ export class MainController{
        let taskWord = vocabluary.words[Math.floor(Math.random() * (vocabluary.words.length))];
        this.task = taskWord.key;
        this.curAnswer = taskWord.value;
-
        this.mainView.translateWord.value = this.task;
     }
 
     checkAnswer(){
-      //  debugger;
+      debugger;
 
 
         let result;
-
-
-    //    this.hideTask();
-
         if(!this.mainView.containerForAnswer.classList.contains('not-displayed')){
             if(Array.isArray(this.curAnswer)){
                 result= this.curAnswer.includes(this.mainView.inputAnswer.value);
@@ -433,8 +426,46 @@ export class MainController{
     }
 
     finish(){
-        
+        cancelAnimationFrame(this.hero.animateRef);
+        debugger;
+        let results = this.analyzeResults({name: this.hero.name, score: this.hero.score});
+        this.mainView.showScore(results);
 
+
+    }
+
+    analyzeResults(curResult){
+        let isInserted = 0;
+        let savedResults = JSON.parse(window.localStorage.getItem('scores'));
+        if(!savedResults){
+            savedResults = [];
+            savedResults.push(curResult);
+            window.localStorage.setItem('scores', JSON.stringify(savedResults));
+        }else{
+            for(let i = 0; i < savedResults.length; i++){
+                if(savedResults[i].score < curResult.score){
+                    savedResults.splice(i, 0, curResult);
+                    isInserted = 1;
+                    break;
+                } else if(savedResults[i].score === curResult.score){
+                    savedResults.splice(i, 0, curResult);
+                    isInserted = 1;
+                    break;
+                }
+            }
+            if(!isInserted){
+                savedResults.push(curResult);
+            }
+
+            //we save only first 10 results
+            if(savedResults.length > 10){
+                savedResults = savedResults.slice(0, 10);
+
+            }
+
+            window.localStorage.setItem('scores', JSON.stringify(savedResults));
+        }
+        return savedResults;
     }
 
 

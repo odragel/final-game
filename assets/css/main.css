@@ -4,6 +4,7 @@
 @import "spell-section.css";
 @import "task-window.css";
 @import "spell-task.css";
+@import "scores.css";
 
 *{
     margin: 0;
