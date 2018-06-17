@@ -74,3 +74,16 @@ button {
 .block-display{
     display: block;
 }
+
+.container-for-buttons{
+    width: 220px;
+    display:grid;
+    grid-template-columns: repeat(2, 1fr);
+    align-items: center;
+    justify-items: center;
+}
+
+button{
+    width: 100px;
+    height: 54px;
+}

@@ -1,3 +1,4 @@
+import * as SETTINGS from "../constants/settings";
 
 export class MainView{
     constructor(){
@@ -8,11 +9,9 @@ export class MainView{
         this.canvas = document.getElementById("gameCanvas");
         this.canvasHeight = this.canvas.height;
         this.canvasWidth = this.canvas.width;
-
-        console.log("canvasHeight="+this.canvasHeight);
-        console.log("canvasWidth="+this.canvasWidth);
-
         this.ctx = this.canvas.getContext("2d");
+
+        this.updateCanvasBackground();
 
         this.sectionGreeting = document.querySelector('.greeting');
         this.btnStart = document.querySelector('#idBtnStart');
@@ -27,13 +26,14 @@ export class MainView{
         this.gameContainer = document.querySelector('.game-container');
         this.gameWindow = document.querySelector('.game-window');
         this.monsterNameSection = document.querySelector('.monster-name');
+
         this.monsterName = document.querySelectorAll('.generated-name');
+        this.heroName = document.querySelector('.hero-name');
+
         this.roundNumber = document.querySelector('.roundNumber');
 
-        this.monsterHealth = document.querySelector(".rectangle.monster");
-        this.heroHealth = document.querySelector(".rectangle.hero");
-
-       // console.dir(this.monsterHealth.width);
+        this.monsterHealth = document.querySelector(".health-score.monster");
+        this.heroHealth = document.querySelector(".health-score.hero");
 
 
         this.modalWindow = document.querySelector('.modal-window');
@@ -62,11 +62,6 @@ export class MainView{
         this.spellTaskContainer = document.querySelector('spell-task-container');
         this.letters = document.querySelectorAll('#letters .letter');
         this.lettersContainer = document.querySelector('#letters');
-
-
-     /*   this.letters = document.querySelector('#letters');
-        console.dir(this.letters);
-*/
 
         this.translateTask = document.querySelector('#translateTask');
         this.translateWord = document.querySelector('#translateKey');
@@ -102,7 +97,8 @@ export class MainView{
     showGameScreen(){
         this.sectionRegistration.classList.add('not-displayed');
 
-        this.modalWindow.classList.remove("not-displayed");
+        debugger;
+        setTimeout(this.modalWindow.classList.remove("not-displayed"), 120000);
         this.monsterNameSection.classList.remove("not-displayed");
 
         this.gameContainer.classList.remove("not-displayed");
@@ -120,8 +116,16 @@ export class MainView{
         this.monsterName.forEach(cur => cur.textContent = newName);
     }
 
-    updateMonsterHealth(value){
+    updateHeroName(newName){
+        this.heroName.textContent = newName;
+    }
 
+    updateMonsterHealth(value){
+        this.monsterHealth.textContent = value;
+    }
+
+    updateHeroHealth(value){
+        this.heroHealth.textContent = value;
     }
 
 
@@ -194,15 +198,18 @@ export class MainView{
         this.heroScore.textContent = value;
     }
 
-
     clearCanvas(){
         this.ctx.clearRect(0,0, this.canvasWidth, this.canvasHeight);
+    }
+
+    updateCanvasBackground(){
+        let newBackground = SETTINGS.PATTERN[Math.floor(Math.random()*SETTINGS.PATTERN.length-1)];
+        this.canvas.style.background = "url("+newBackground+")";
     }
 
     showScore(scores){
             this.gameContainer.classList.add('not-displayed');
             this.gameFinish.classList.remove('not-displayed');
-            debugger;
 
             scores.forEach((cur) => {
                 let span1 = document.createElement('span');
@@ -216,8 +223,6 @@ export class MainView{
             });
 
         }
-
-
-
+        
 
 }

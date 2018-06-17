@@ -1,7 +1,5 @@
 .game-container{
     width: 1100px;
-    height: 900px;
-
 
     background: gold;
 
@@ -27,8 +25,15 @@
     grid-template-columns: 1fr;
     align-items: center;
     justify-items: center;
-    background: darkgrey;
+    background: transparent;
 
+}
+
+.modal-window section{
+    background: lightgrey;
+    padding: 20px;
+    border: darkgrey;
+    border-radius: 10px;
 }
 
 .monster-name{
@@ -43,20 +48,34 @@
     font-weight: bold;
     font-size: 16px;
     font-family: Arial, sans-serif;
-
 }
+
+
+
+
 
 .health{
     display:grid;
     grid-template-columns: 1fr 1fr;
     grid-column-gap: 100px;
+    color: darkred;
+    font-weight: bold;
+    font-size: 16px;
+    font-family: Arial, sans-serif;
 }
 
 .player-health{
-    display: grid;
-    grid-template-columns: auto 100px;
-    justify-items: right;
+    display:grid;
+    grid-template-columns: 1fr;
+    justify-items: center;
+}
 
+.player-health.monster{
+    justify-self: left;
+}
+
+.player-health.hero{
+    justify-self: right;
 }
 
 .rectangle{
@@ -64,4 +83,9 @@
     background: red;
     justify-self: left;
 
+}
+
+canvas{
+  /* background: url('../images/brick-pattern.png') ;*/
+  /*  background: url('../images/grey-pattern2.png');*/
 }

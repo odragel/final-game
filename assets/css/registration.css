@@ -3,7 +3,8 @@
     width: 300px;
     margin: 0 auto;
     padding:20px;
-    z-index: 2;
+    display:grid;
+    justify-items: center;
     grid-template-columns: 1fr
 }
 

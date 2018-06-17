@@ -1,5 +1,9 @@
+import * as SETTINGS from "../constants/settings";
+
 export class Hero {
     constructor(view, ctx, name){
+        this.health = 100;
+
         this.view = view;
         this.ctx = ctx;
         this.name = name;
@@ -32,13 +36,11 @@ export class Hero {
         this.top = 270;
         this.left = 900;
         this.curFrame = 0;
-        debugger;
         this.ctx.drawImage(this.imgHero, this.leftCoord + this.frameWidth * this.curFrame , 0, this.frameWidth, this.height,
             this.left, this.top, this.width/this.numOfFrames, this.height);
     }
 
     draw(){
-     //   debugger;
         this.ctx.drawImage(this.imgHero, this.leftCoord + this.frameWidth * this.curFrame , 0, this.frameWidth, this.height,
             this.left, this.top, this.width/this.numOfFrames, this.height);
     }
@@ -81,7 +83,18 @@ export class Hero {
         this.score = this.score + value;
     }
 
+    descreaseHealth(){
+        this.health = this.health - SETTINGS.SPELL_VALUE;
+        this.view.updateHeroHealth(this.health);
+    }
 
+    isDead(){
+        if (this.health <=0){
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 
 }

@@ -1,7 +1,9 @@
 import monsters from "../../../assets/json/monsters.json";
+import * as SETTINGS from "../constants/settings";
 
 export class Monster {
     constructor(view, ctx) {
+        this.health = 100;
         this.view = view;
         this.ctx = ctx;
         this.imgMonster = new Image();
@@ -117,7 +119,8 @@ export class Monster {
     }
 
     descreaseHealth(){
-        this.health = this.health - 100;
+        this.health = this.health - SETTINGS.SPELL_VALUE;
+        this.view.updateMonsterHealth(this.health);
     }
 
     isDead(){

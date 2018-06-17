@@ -36,25 +36,19 @@
         <header class="health">
             <div class="player-health monster">
                 <span class="generated-name"></span>
-                <!--div class="rectangle monster"></div-->
+                <span class="health-score monster"></span>
             </div>
 
             <div class="player-health hero" >
                 <span class="hero-name"></span>
-                <!--div class="rectangle hero"></div-->
+                <span class="health-score hero"></span>
             </div>
         </header>
-
-
         <main>
             <canvas id="gameCanvas" width="1100" height="600"
                     style="border:1px solid #000000;">
             </canvas>
         </main>
-        <!--footer>
-            <span>Click Enter to start</span>
-        </footer-->
-
     </section>
 
 
@@ -118,9 +112,6 @@
         <button id="btnCheckAnswer" type="button">Check</button>
     </section>
 
-    <section class="">
-
-    </section>
 
     <section class="round-end not-displayed">
         <article class="congratulations-text">
@@ -129,11 +120,12 @@
         <article class="congratulations-score">
             Your score is <span class="hero-score"></span>
         </article>
-        <button id="idBtnNewRound"> New round </button>
-        <button id="idBtnFinish"> Finish </button>
+        <div class="container-for-buttons">
+            <button id="idBtnNewRound"> New round </button>
+            <button id="idBtnFinish"> Finish </button>
+        </div>
+
     </section>
-
-
 
 </div>
 
@@ -141,17 +133,26 @@
     <section class="game-over not-displayed">
 
     </section>
+
+
     <section class="game-finish not-displayed">
+
+
         <h2>Congratulations !!!</h2>
         <h2>TOP 10</h2>
         <div >
             <div class="scores-table">
-                <span class="header">Full name</span>
-                <span class="header">Level</span>
+                <span class="header">Nickname</span>
+                <span class="header">Score</span>
             </div>
             <div id="score-content" class="scores-table">
             </div>
         </div>
+        <div class="container-for-buttons">
+            <button id="idBtnNewGame">New game</button>
+            <button id="idBtnStartWithName">New nickname</button>
+        </div>
+
     </section>
 
 

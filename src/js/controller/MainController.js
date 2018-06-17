@@ -3,12 +3,15 @@ import {SpellTaskController} from "./SpellTaskController.js";
 import {Monster} from "../model/Monster";
 import {Hero} from "../model/Hero";
 import {FireBallSpell} from "../model/FireBallSpell";
+import {FireSpell} from "../model/FireSpell";
+
 
 import * as HINTS from "../constants/hints";
-
+import * as SETTINGS from "../constants/settings";
 
 import vocabluary from "../../../assets/json/vocabluary.json";
 import spellFire from "../../../assets/json/spell-fire.json";
+import {SPELL_FIRE} from "../constants/settings";
 
 export class MainController{
 
@@ -35,6 +38,8 @@ export class MainController{
         this.init();
 
         this.monster = new Monster(this.mainView, this.ctx);
+        debugger;
+        this.mainView.updateMonsterHealth(this.monster.health);
 
      //   this.generateMonster();
 
@@ -70,6 +75,8 @@ export class MainController{
             e.preventDefault();
         //   this.mainView.updateGameScreenHeader(this.curUser)
             this.hero = new Hero(this.mainView, this.ctx, this.mainView.regNickName.value);
+            this.mainView.updateHeroName(this.hero.name);
+            this.mainView.updateHeroHealth(this.hero.health);
             this.mainView.showGameScreen();
         }
     }
@@ -207,7 +214,6 @@ export class MainController{
     }
 
 
-
     generateTranslateTask(){
        let taskWord = vocabluary.words[Math.floor(Math.random() * (vocabluary.words.length))];
        this.task = taskWord.key;
@@ -216,9 +222,6 @@ export class MainController{
     }
 
     checkAnswer(){
-      debugger;
-
-
         let result;
         if(!this.mainView.containerForAnswer.classList.contains('not-displayed')){
             if(Array.isArray(this.curAnswer)){
@@ -234,14 +237,63 @@ export class MainController{
         }
 
         if(result){
-            alert("you are right");
-            this.generateSpellFire();
+          /*  alert("you are right");*/
+            this.spell = new FireSpell(this.mainView, this.ctx, SPELL_FIRE.monster.left, SPELL_FIRE.monster.top, this.monster);
+            this.spell.animate();
+
+            this.monster.descreaseHealth();
+
+
+            if(this.monster.isDead()){
+                // round is over
+                console.log("monster is dead");
+                debugger;
+/*
+                cancelAnimationFrame(this.spell.animateRef);
+
+                this.spell.clear();
+                this.monster.clear();
+*/
+
+
+
+                //temp
+                this.hero.animate();
+                this.hero.updateScore(this.hero.health);
+
+                this.mainView.updateHeroScore(this.hero.score);
+                this.mainView.showCongratulations();
+
+                // this.monster = new Monster(this.mainView, this.ctx);
+
+
+
+            } else{
+
+
+                this.mainView.showSpellSection();
+            }
+
+
+
+          //  this.generateSpellFire();
+
 
 
         } else {
             alert("correct answer was -"+ this.curAnswer);
-            this.fireBallSpell =  new FireBallSpell(this.mainView, this.ctx);
+           /* this.fireBallSpell =  new FireBallSpell(this.mainView, this.ctx);
             this.fireBallSpell.animate();
+            */
+           this.spell = new FireSpell(this.mainView, this.ctx, SPELL_FIRE.hero.left, SPELL_FIRE.hero.top, this.hero);
+           this.spell.animate();
+
+            this.hero.descreaseHealth();
+            if(this.hero.isDead()){
+                this.heroHasLost();
+            } else {
+                this.mainView.showSpellSection();
+            }
 
         }
 
@@ -251,7 +303,7 @@ export class MainController{
     }
 
     analyzeSpelling(){
-     //   debugger;
+
         let result = "";
         this.mainView.getLetters().forEach(
           function(cur){
@@ -266,171 +318,26 @@ export class MainController{
 
     }
 
-    generateSpellFire(){
-        let imgSpellFire = new Image();
-        imgSpellFire.src ="assets/images/spell-fire.png";
-        let topCoord = 400, leftCoord = 500;
-
-        let frameIndex = 0;
-    //    debugger;
-        let ctx = this.ctx;
-
-        this.fire = this.sprite({
-            context: ctx,
-            width: 950,
-            height: 185,
-            top: topCoord,
-            left: this.monster.bodyWidth+this.monster.leftBody,
-            image: imgSpellFire,
-            numberOfFrames: 5,
-            ticksPerFrame: 8
-        });
-
-        imgSpellFire.onload = this.fireLoop.bind(this);
-  }
-
-    sprite(options) {
-
-            var that = {},
-                frameIndex = 0,
-                tickCount = 0,
-                ticksPerFrame = options.ticksPerFrame || 0,
-                numberOfFrames = options.numberOfFrames || 1;
-
-
-            that.context = options.context;
-            that.width = options.width;
-            that.height = options.height;
-            that.image = options.image;
-            that.top = options.top;
-            that.left = options.left;
-            that.shouldBeStopped = 0;
-
-
-
-            that.update = function () {
-                tickCount += 1;
-
-                if (tickCount > ticksPerFrame) {
-
-                    tickCount = 0;
-
-                    // If the current frame index is in range
-                    if (frameIndex < numberOfFrames - 1) {
-                        // Go to the next frame
-                        frameIndex += 1;
-
-                    } else {
-                        frameIndex = 0;
-                        this.shouldBeStopped = 1;
-                    }
-                }
-            };
-
-            that.draw = function () {
-
-                // Clear the canvas
-               // that.context.clearRect(that.left, that.top, that.width, that.height);
-
-
-                // Draw the animation
-                that.context.drawImage(
-                    that.image,
-                    frameIndex * that.width / numberOfFrames,
-                    0,
-                    that.width / numberOfFrames,
-                    that.height,
-                    that.left,
-                    that.top,
-                    that.width / numberOfFrames,
-                    that.height);
-            };
-
-            that.clear = function(){
-                that.context.clearRect(that.left, that.top, that.width/numberOfFrames, that.height);
-            }
-
-            return that;
-        }
-
-    fireLoop(){
-
-       // debugger;
-        this.fire.update();
-
-        if(!this.fire.shouldBeStopped){
-            this.monster.isSpellTime = 1;
-         //   debugger;
-            this.fire.clear();
-            this.monster.clear();
-
-         //   debugger;
-            this.monster.draw();
-            this.fire.draw();
-
-            //  we could
-            // this.generateMonster();
-
-
-            window.requestAnimationFrame(this.fireLoop.bind(this));
-        } else{
-
-            this.fire.clear();
-            this.monster.draw();
-            this.monster.isSpellTime = 0;
-            this.monster.animate();
-
-            this.monster.descreaseHealth();
-            if(this.monster.isDead()){
-                // round is over
-                console.log("monster is dead");
-                this.monster.clear();
-
-              //  debugger;
-
-              //temp
-                this.hero.animate();
-
-                this.hero.updateScore(this.scoreForRound);
-                this.mainView.updateHeroScore(this.hero.score);
-                this.mainView.showCongratulations();
-
-               // this.monster = new Monster(this.mainView, this.ctx);
-
-
-
-            } else{
-                console.log("monsterHealth="+this.monster.health);
-                this.mainView.showSpellSection();
-            }
-
-        }
-
-
-
-    }
-
-
     newRound(){
-        debugger;
         cancelAnimationFrame(this.hero.animateRef);
         this.mainView.clearCanvas();
         this.mainView.hideCongratulations();
-        this.scoreForRound = 100;
         this.mainView.showMonsterName();
 
 
-
+        this.mainView.updateCanvasBackground();
         this.monster = new Monster(this.mainView, this.ctx);
         this.hero.drawInInitialPosition();
     }
 
     finish(){
         cancelAnimationFrame(this.hero.animateRef);
-        debugger;
         let results = this.analyzeResults({name: this.hero.name, score: this.hero.score});
         this.mainView.showScore(results);
+    }
 
+
+    heroHasLost(){
 
     }
 
