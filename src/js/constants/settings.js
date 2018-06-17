@@ -1,5 +1,3 @@
-export const MODAL_WINDOW_DELAY = 7000;
-
 export const PATTERN = [
   "assets/images/grey-pattern.png",
   "assets/images/grey-pattern2.png",
@@ -14,4 +12,7 @@ export const SPELL_FIRE ={
   monster:{left: 300, top: 370},
   hero:{left: 800, top: 270}
 };
+
+export const CORRECT_ANSWER = "Your answer is correct";
+export const INCORRECT_ANSWER = "Your answer is wrong";
 

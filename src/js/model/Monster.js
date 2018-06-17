@@ -6,8 +6,6 @@ export class Monster {
         this.health = 100;
         this.view = view;
         this.ctx = ctx;
-        this.imgMonster = new Image();
-        this.imgMonster.src ="assets/images/monsters-parts.png";
         this.canvasHeight = 600;
         this.leftBody = 100;
         this.health = 100;
@@ -22,6 +20,8 @@ export class Monster {
     }
     init(){
         this.determinePartsOfBody();
+        this.imgMonster = new Image();
+        this.imgMonster.src ="assets/images/monsters-parts.png";
         this.imgMonster.onload = this.draw.bind(this);
     }
 
@@ -84,10 +84,7 @@ export class Monster {
     }
 
     clear(){
-        console.log("clear monster");
-      //  this.ctx.clearRect(this.leftBody, this.topBody -this.headHeight, this.totalWidth, this.totalHeight);
-        this.ctx.clearRect(this.leftBody-20, this.topBody-this.headHeight, this.totalWidth+20, this.totalHeight+this.headHeight);
-
+       this.ctx.clearRect(this.leftBody-20, this.topBody-this.headHeight, this.totalWidth+20, this.totalHeight+this.headHeight+20);
     }
 
     draw(){
@@ -118,7 +115,7 @@ export class Monster {
 
     }
 
-    descreaseHealth(){
+    decreaseHealth(){
         this.health = this.health - SETTINGS.SPELL_VALUE;
         this.view.updateMonsterHealth(this.health);
     }

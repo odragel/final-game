@@ -6,6 +6,10 @@ export class MainView{
     }
 
     init(){
+        this.roundFinishEvent = document.createEvent('Event');
+        this.roundFinishEvent.initEvent("roundFinish", false, false);
+
+
         this.canvas = document.getElementById("gameCanvas");
         this.canvasHeight = this.canvas.height;
         this.canvasWidth = this.canvas.width;
@@ -69,12 +73,12 @@ export class MainView{
 
         this.containerForAnswer = document.querySelector('#containerForAnswer');
 
-
-
         this.inputAnswer = document.querySelector('#inputAnswer');
         this.btnCheckAnswer = document.querySelector('#btnCheckAnswer');
         this.taskHint = document.querySelector('.task-hint');
 
+        this.containerAnswerResult = document.querySelector('.container-answer-result');
+        this.textAnswerResult = document.querySelector('.answer-result');
 
         this.sectionRoundEnd = document.querySelector('.round-end');
         this.heroScore = document.querySelector('.hero-score');
@@ -86,6 +90,14 @@ export class MainView{
 
         this.score = document.querySelector('#score-content');
         this.score.innerHTML='';
+        this.btnPlayNewGame = document.querySelector("#idBtnNewGame");
+        this.btnPlayWithNewNickname = document.querySelector("#idBtnStartWithName");
+
+        this.gameLost = document.querySelector('.game-over');
+    }
+
+    emptyNickField(){
+        this.regNickName.value="";
     }
 
     showRegistration(){
@@ -96,21 +108,28 @@ export class MainView{
 
     showGameScreen(){
         this.sectionRegistration.classList.add('not-displayed');
-
-        debugger;
-        setTimeout(this.modalWindow.classList.remove("not-displayed"), 120000);
+        this.modalWindow.classList.remove("not-displayed");
         this.monsterNameSection.classList.remove("not-displayed");
 
         this.gameContainer.classList.remove("not-displayed");
         this.gameWindow.classList.remove("not-displayed");
     }
 
-    showMonsterName(){
-        this.monsterNameSection.classList.remove("not-displayed");
+    hideGameScreen(){
+        this.modalWindow.classList.add("not-displayed");
+        this.gameContainer.classList.add("not-displayed");
     }
 
 
 
+    showGameLostSection(){
+        this.gameContainer.classList.add("not-displayed");
+        this.gameLost.classList.remove('not-displayed');
+    }
+
+    showMonsterName(){
+        this.monsterNameSection.classList.remove("not-displayed");
+    }
 
     updateMonsterName(newName){
         this.monsterName.forEach(cur => cur.textContent = newName);
@@ -128,8 +147,6 @@ export class MainView{
         this.heroHealth.textContent = value;
     }
 
-
-
     hideMonsterName(){
         this.monsterNameSection.classList.add("not-displayed");
     }
@@ -140,7 +157,6 @@ export class MainView{
     }
 
     clearInputAnswer(){
-        debugger;
         this.inputAnswer.value="";
     }
 
@@ -148,7 +164,6 @@ export class MainView{
     createSpellTask(newWord) {
         let mainView = this;
         let letters = Array.from(newWord);
-        console.log("letters=" + letters);
 
         letters.forEach((cur, index) => {
             let newIndex = Math.floor(Math.random() * Math.floor(letters.length - 1));
@@ -175,7 +190,6 @@ export class MainView{
     }
 
     updateTaskHint(newValue){
-        debugger;
         this.taskHint.textContent = newValue;
     }
 
@@ -183,13 +197,26 @@ export class MainView{
         return document.querySelectorAll('#letters .letter');
     }
 
+    showAnswerResult(isCorrect){
+        if(isCorrect){
+            this.textAnswerResult.textContent = SETTINGS.CORRECT_ANSWER;
+        } else {
+            this.textAnswerResult.textContent = SETTINGS.INCORRECT_ANSWER;
+        }
+
+        this.containerAnswerResult.classList.remove('not-displayed');
+    }
+
+    hideAnswerResult(){
+        this.containerAnswerResult.classList.add('not-displayed');
+    }
+
+
     showCongratulations(){
-        console.dir(this);
         this.sectionRoundEnd.classList.remove('not-displayed');
     }
 
     hideCongratulations(){
-        console.dir(this);
         this.sectionRoundEnd.classList.add('not-displayed');
     }
 
@@ -203,13 +230,21 @@ export class MainView{
     }
 
     updateCanvasBackground(){
-        let newBackground = SETTINGS.PATTERN[Math.floor(Math.random()*SETTINGS.PATTERN.length-1)];
+        let randomIndex = Math.floor(Math.random()*(SETTINGS.PATTERN.length-1));
+        let newBackground = SETTINGS.PATTERN[randomIndex];
         this.canvas.style.background = "url("+newBackground+")";
     }
 
     showScore(scores){
             this.gameContainer.classList.add('not-displayed');
             this.gameFinish.classList.remove('not-displayed');
+
+
+            if(!this.gameLost.classList.contains('not-displayed')){
+                this.gameLost.classList.add('not-displayed');
+            }
+
+            this.score.innerHTML="";
 
             scores.forEach((cur) => {
                 let span1 = document.createElement('span');
@@ -223,6 +258,11 @@ export class MainView{
             });
 
         }
-        
+
+     hideScore(){
+         this.gameFinish.classList.add('not-displayed');
+         this.gameContainer.classList.remove('not-displayed');
+     }
+
 
 }

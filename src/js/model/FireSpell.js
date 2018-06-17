@@ -7,11 +7,6 @@ export class FireSpell {
         this.left = left;
         this.participant = participant;
 
-
-        this.img = new Image();
-        this.img.src ="assets/images/spell-fire.png";
-        this.img.onload = this.draw.bind(this);
-
         this.isStopped = 0;
         this.height = 185;
         this.width = 950;
@@ -20,21 +15,24 @@ export class FireSpell {
         this.curFrame = 0;
         this.numOfFrames = 5;
 
-        this.frameWidth = this.width / this.numOfFrames;
-
-
-
         this.tickCount = 0;
         this.tickFrame = 6;
 
 
         this.deltaX = 0;
 
+        this.init();
+    }
+
+    init(){
+        this.img = new Image();
+        this.img.src ="assets/images/spell-fire.png";
+        this.img.onload= this.draw.bind(this);
+        this.frameWidth = this.width / this.numOfFrames;
 
     }
 
     draw(){
-        this.participant.draw();
         this.ctx.drawImage(this.img, this.leftCoord + this.frameWidth * this.curFrame , 0, this.frameWidth, this.height,
             this.left, this.top, this.width/this.numOfFrames, this.height);
     }
@@ -61,6 +59,7 @@ export class FireSpell {
     animate(){
         this.update();
         this.clear();
+        this.participant.draw();
 
         if(!this.isStopped){
             this.draw();

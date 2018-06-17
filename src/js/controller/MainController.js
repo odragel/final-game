@@ -2,7 +2,6 @@ import {MainView} from "../view/MainView";
 import {SpellTaskController} from "./SpellTaskController.js";
 import {Monster} from "../model/Monster";
 import {Hero} from "../model/Hero";
-import {FireBallSpell} from "../model/FireBallSpell";
 import {FireSpell} from "../model/FireSpell";
 
 
@@ -10,7 +9,6 @@ import * as HINTS from "../constants/hints";
 import * as SETTINGS from "../constants/settings";
 
 import vocabluary from "../../../assets/json/vocabluary.json";
-import spellFire from "../../../assets/json/spell-fire.json";
 import {SPELL_FIRE} from "../constants/settings";
 
 export class MainController{
@@ -25,24 +23,8 @@ export class MainController{
         this.canvas = this.mainView.canvas;
         this.ctx = this.mainView.ctx;
 
-        this.scoreForRound = 100;
-
-      //  debugger;
-     //   this.audioFire = new Audio("../../../assets/sounds/fire.mp3");
-     //   this.audioFire.play();
-
-
-
-
 
         this.init();
-
-        this.monster = new Monster(this.mainView, this.ctx);
-        debugger;
-        this.mainView.updateMonsterHealth(this.monster.health);
-
-     //   this.generateMonster();
-
     }
 
     init(){
@@ -67,16 +49,24 @@ export class MainController{
 
         this.mainView.btnFinish.addEventListener('click', this.finish.bind(this));
 
-    }
+        this.mainView.gameLost.addEventListener('click', this.finish.bind(this));
 
+        this.mainView.btnPlayWithNewNickname.addEventListener('click', this.playWithNewNickName.bind(this));
+
+        this.mainView.btnPlayNewGame.addEventListener('click', this.playNewGame.bind(this));
+    }
 
     registerUser(e){
         if(this.mainView.registrationForm.checkValidity()){
             e.preventDefault();
-        //   this.mainView.updateGameScreenHeader(this.curUser)
+
             this.hero = new Hero(this.mainView, this.ctx, this.mainView.regNickName.value);
             this.mainView.updateHeroName(this.hero.name);
             this.mainView.updateHeroHealth(this.hero.health);
+
+            this.monster = new Monster(this.mainView, this.ctx);
+            this.mainView.updateMonsterHealth(this.monster.health);
+            this.mainView.updateMonsterName(this.monster.newName);
             this.mainView.showGameScreen();
         }
     }
@@ -129,7 +119,6 @@ export class MainController{
          }
          this.mainView.taskWindow.classList.remove('not-displayed');
     }
-
 
     hideTask(){
         this.mainView.taskWindow.classList.add('not-displayed');
@@ -222,6 +211,8 @@ export class MainController{
     }
 
     checkAnswer(){
+
+
         let result;
         if(!this.mainView.containerForAnswer.classList.contains('not-displayed')){
             if(Array.isArray(this.curAnswer)){
@@ -232,78 +223,60 @@ export class MainController{
         } else{
             //analyze spelling
             result = this.curAnswer == this.analyzeSpelling();
-
-
-        }
-
-        if(result){
-          /*  alert("you are right");*/
-            this.spell = new FireSpell(this.mainView, this.ctx, SPELL_FIRE.monster.left, SPELL_FIRE.monster.top, this.monster);
-            this.spell.animate();
-
-            this.monster.descreaseHealth();
-
-
-            if(this.monster.isDead()){
-                // round is over
-                console.log("monster is dead");
-                debugger;
-/*
-                cancelAnimationFrame(this.spell.animateRef);
-
-                this.spell.clear();
-                this.monster.clear();
-*/
-
-
-
-                //temp
-                this.hero.animate();
-                this.hero.updateScore(this.hero.health);
-
-                this.mainView.updateHeroScore(this.hero.score);
-                this.mainView.showCongratulations();
-
-                // this.monster = new Monster(this.mainView, this.ctx);
-
-
-
-            } else{
-
-
-                this.mainView.showSpellSection();
-            }
-
-
-
-          //  this.generateSpellFire();
-
-
-
-        } else {
-            alert("correct answer was -"+ this.curAnswer);
-           /* this.fireBallSpell =  new FireBallSpell(this.mainView, this.ctx);
-            this.fireBallSpell.animate();
-            */
-           this.spell = new FireSpell(this.mainView, this.ctx, SPELL_FIRE.hero.left, SPELL_FIRE.hero.top, this.hero);
-           this.spell.animate();
-
-            this.hero.descreaseHealth();
-            if(this.hero.isDead()){
-                this.heroHasLost();
-            } else {
-                this.mainView.showSpellSection();
-            }
-
         }
 
         this.hideTask();
 
+        this.mainView.showAnswerResult(result);
+        setTimeout(this.mainView.hideAnswerResult.bind(this.mainView), 1000);
+
+        if(result){
+            this.spell = new FireSpell(this.mainView, this.ctx, SPELL_FIRE.monster.left, SPELL_FIRE.monster.top, this.monster);
+            this.spell.animate();
+            this.monster.decreaseHealth();
+
+           setTimeout(this.isRoundFinish.bind(this), 2000);
+
+
+        } else {
+            this.spell = new FireSpell(this.mainView, this.ctx, SPELL_FIRE.hero.left, SPELL_FIRE.hero.top, this.hero);
+            this.spell.animate();
+            this.hero.decreaseHealth();
+            setTimeout(this.isHeroLost.bind(this), 2000);
+        }
+
+
+
 
     }
 
-    analyzeSpelling(){
 
+
+    isRoundFinish(){
+        if(this.monster.isDead()){
+
+            this.hero.animate();
+            this.hero.updateScore(this.hero.health);
+
+            this.mainView.updateHeroScore(this.hero.score);
+            this.mainView.showCongratulations();
+
+        } else{
+
+            this.mainView.showSpellSection();
+        }
+    }
+
+    isHeroLost(){
+        if(this.hero.isDead()){
+            this.heroHasLost();
+        } else {
+            this.mainView.showSpellSection();
+        }
+    }
+
+
+    analyzeSpelling(){
         let result = "";
         this.mainView.getLetters().forEach(
           function(cur){
@@ -314,10 +287,6 @@ export class MainController{
     }
 
 
-    hideSpellsSelection(){
-
-    }
-
     newRound(){
         cancelAnimationFrame(this.hero.animateRef);
         this.mainView.clearCanvas();
@@ -327,18 +296,45 @@ export class MainController{
 
         this.mainView.updateCanvasBackground();
         this.monster = new Monster(this.mainView, this.ctx);
+        this.mainView.updateMonsterHealth(this.monster.health);
+        this.mainView.updateMonsterName(this.monster.newName);
+
         this.hero.drawInInitialPosition();
+        this.hero.health = 100;
+        this.mainView.updateHeroHealth(this.hero.health);
     }
 
     finish(){
         cancelAnimationFrame(this.hero.animateRef);
+        this.mainView.clearCanvas();
         let results = this.analyzeResults({name: this.hero.name, score: this.hero.score});
         this.mainView.showScore(results);
     }
 
+    playWithNewNickName(){
+        this.mainView.hideScore();
+        this.mainView.hideCongratulations();
+        this.mainView.hideGameScreen();
+        this.mainView.emptyNickField();
+
+        this.showRegistration();
+
+    }
+
+    playNewGame(){
+        this.mainView.hideScore();
+
+        this.hero.score = 0;
+        this.newRound();
+    }
+
+
 
     heroHasLost(){
+        cancelAnimationFrame(this.monster.animateRef);
 
+        this.mainView.clearCanvas();
+        this.mainView.showGameLostSection();
     }
 
     analyzeResults(curResult){
@@ -366,7 +362,7 @@ export class MainController{
 
             //we save only first 10 results
             if(savedResults.length > 10){
-                savedResults = savedResults.slice(0, 10);
+                savedResults = savedResults.slice(0, 9);
 
             }
 

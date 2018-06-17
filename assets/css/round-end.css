@@ -1,0 +1,11 @@
+.round-end{
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-items: center;
+}
+
+.congratulations-score{
+    padding-top: 20px;
+    color: red;
+    font-weight:bold;
+}

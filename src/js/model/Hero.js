@@ -9,12 +9,9 @@ export class Hero {
         this.name = name;
         this.health = 100;
         this.score = 0;
-        this.imgHero = new Image();
-        this.imgHero.src ="assets/images/boy.png";
-        this.imgHero.onload = this.draw.bind(this);
+
         this.top = 270;
         this.left = 900;
-
 
         this.height = 157;
         this.width = 680;
@@ -23,13 +20,20 @@ export class Hero {
         this.curFrame = 0;
         this.numOfFrames = 5;
 
-        this.frameWidth = this.width / this.numOfFrames;
-
 
 
         this.tickCount = 0;
         this.tickFrame = 5;
         this.deltaX = 10;
+
+        this.init();
+    }
+
+    init(){
+        this.imgHero = new Image();
+        this.imgHero.src ="assets/images/boy.png";
+        this.imgHero.onload = this.drawInInitialPosition.bind(this);
+        this.frameWidth = this.width / this.numOfFrames;
     }
 
     drawInInitialPosition(){
@@ -58,24 +62,15 @@ export class Hero {
             if(this.curFrame == this.numOfFrames){
                 this.curFrame = 0;
             }
-
-            if(this.left == - this.frameWidth){
-                console.log("cancelled");
-                cancelAnimationFrame(this.animateRef);
-
-            }
         }
     }
 
     animate(){
-      //  console.log("animate hero");
         this.animateRef = requestAnimationFrame(this.animate.bind(this));
 
         this.update();
         this.clear();
         this.draw();
-
-
 
     }
 
@@ -83,13 +78,14 @@ export class Hero {
         this.score = this.score + value;
     }
 
-    descreaseHealth(){
+    decreaseHealth(){
         this.health = this.health - SETTINGS.SPELL_VALUE;
         this.view.updateHeroHealth(this.health);
     }
 
     isDead(){
         if (this.health <=0){
+            this.clear();
             return true;
         } else {
             return false;

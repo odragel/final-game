@@ -12,7 +12,6 @@ export class SpellTaskController{
 
     addDnDHandlers(elem) {
         elem.addEventListener('dragstart', this.handleDragStart.bind(this), false);
-        elem.addEventListener('dragenter', this.handleDragEnter.bind(this), false)
         elem.addEventListener('dragover', this.handleDragOver.bind(this), false);
         elem.addEventListener('dragleave', this.handleDragLeave.bind(this), false);
         elem.addEventListener('drop', this.handleDrop.bind(this), false);
@@ -20,9 +19,7 @@ export class SpellTaskController{
     }
 
     handleDragStart(e) {
-        // Target (this) element is the source node.
-        console.log("handleDragStart");
-        console.dir(e);
+
         this.dragSrcEL = e.currentTarget;
 
         e.dataTransfer.effectAllowed = 'move';
@@ -33,36 +30,25 @@ export class SpellTaskController{
 
     handleDragOver(e) {
         if (e.preventDefault) {
-            e.preventDefault(); // Necessary. Allows us to drop.
+            e.preventDefault();
         }
 
         e.currentTarget.classList.add('over');
         e.dataTransfer.dropEffect = 'move';  // See the section on the DataTransfer object.
-
         return false;
     }
 
-    handleDragEnter(e) {
-        console.log("handleDragEnter"+ e.target);
-        console.dir(e);
-        // this / e.target is the current hover target.
-    }
 
     handleDragLeave(e) {
-        console.log("handleDragLeave"+ e.target);
-        console.dir(e);
-        e.currentTarget.classList.remove('over');  // this / e.target is previous target element.
+        e.currentTarget.classList.remove('over');
     }
 
     handleDrop(e) {
-        console.log("handleDrop"+ e.target);
-        console.dir(e);
-
         if (e.stopPropagation) {
-            e.stopPropagation(); // Stops some browsers from redirecting.
+            e.stopPropagation();
         }
 
-        // Don't do anything if dropping the same column we're dragging.
+        // Don't do anything if dropping the same letter we're dragging.
         if (this.dragSrcEL != e.currentTarget) {
             var selectedEL = e.currentTarget;
             this.dragSrcEL.parentNode.removeChild(this.dragSrcEL);
@@ -77,7 +63,6 @@ export class SpellTaskController{
     }
 
     handleDragEnd(e) {
-        console.log("handleDragEnd"+ e.target);
         e.currentTarget.classList.remove('over');
     }
 }
