@@ -30,3 +30,45 @@
     grid-template-columns: repeat(2, 1fr);
     grid-column-gap: 50px;
 }
+
+.notification-window{
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width:100%;
+    height:100%;
+    display:grid;
+    grid-template-columns:1fr;
+    align-items: center;
+    justify-items: center;
+    z-index: 1;
+}
+
+.notification-window .container{
+    height: 450px;
+    display:grid;
+    grid-template-columns: 50px auto 50px;
+    grid-template-rows: 20px auto;
+    grid-column-gap: 10px;
+    align-items: center;
+    justify-items: center;
+    background: rgba(128,128,128, 0.8);
+}
+
+.close-icon{
+    grid-column: 3;
+    justify-self: right;
+    display:inline-block;
+    margin:10px;
+    cursor: pointer;
+}
+
+.close-icon:hover{
+    color: darkred;
+}
+
+.small-button{
+    width: 40px;
+    font-weight: bold;
+}
+

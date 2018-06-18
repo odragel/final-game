@@ -22,6 +22,13 @@ export class MainView{
         this.sectionGreeting = document.querySelector('.greeting');
         this.btnStart = document.querySelector('#idBtnStart');
 
+        this.btnCloseImage = document.querySelector('#idCloseImg');
+        this.btnPrevImage = document.querySelector('#idPrevImg');
+        this.btnNextImage = document.querySelector('#idNextImg');
+        this.allGamePlayImg = Array.from(document.querySelectorAll('.game-play-img'));
+        this.sectionNotifWindow = document.querySelector('.notification-window');
+        this.openedImage = document.querySelector('.opened-image');
+
         this.sectionRegistration = document.querySelector('.registration');
         this.registrationForm = document.querySelector('#registration-form');
         this.regNickName = document.querySelector('#nickName');
@@ -96,7 +103,37 @@ export class MainView{
         this.btnPlayWithNewNickname = document.querySelector("#idBtnStartWithName");
 
         this.gameLost = document.querySelector('.game-over');
+
+        this.sectionGamePlay = document.querySelector(".game-play");
     }
+
+    openImage(elem){
+        this.curImageIndex = elem.getAttribute("data-nr");
+        this.openedImage.setAttribute("src", elem.getAttribute("src"));
+        this.sectionNotifWindow.classList.remove("not-displayed");
+    }
+
+    closeNotifWindow(){
+        this.sectionNotifWindow.classList.add("not-displayed");
+    }
+
+    nextImage(){
+       this.curImageIndex++;
+       if(this.curImageIndex == this.allGamePlayImg.length){
+           this.curImageIndex = 0;
+       }
+       this.openedImage.setAttribute("src", (this.allGamePlayImg[this.curImageIndex]).getAttribute("src"));
+    }
+
+    prevImage(){
+        this.curImageIndex--;
+        if(this.curImageIndex < 0){
+            this.curImageIndex = this.allGamePlayImg.length-1;
+        }
+        this.openedImage.setAttribute("src", (this.allGamePlayImg[this.curImageIndex]).getAttribute("src"));
+    }
+
+
 
     emptyNickField(){
         this.regNickName.value="";

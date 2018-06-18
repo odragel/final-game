@@ -51,7 +51,33 @@ export class MainController{
 
         this.mainView.btnPlayNewGame.addEventListener('click', this.playNewGame.bind(this));
 
+        this.mainView.sectionGamePlay.addEventListener('click', this.showImgInModal.bind(this));
+
+        this.mainView.btnCloseImage.addEventListener('click', this.closeOpenedImg.bind(this));
+        this.mainView.btnNextImage.addEventListener('click', this.showNextImg.bind(this));
+        this.mainView.btnPrevImage.addEventListener('click', this.showPrevImg.bind(this));
     }
+
+
+    showImgInModal(e){
+        if(e.target.classList.contains("game-play-img")){
+            this.mainView.openImage(e.target);
+        }
+    }
+
+    closeOpenedImg(){
+        this.mainView.closeNotifWindow();
+    }
+
+    showNextImg(){
+        this.mainView.nextImage();
+    }
+
+    showPrevImg(){
+        this.mainView.prevImage();
+    }
+
+
 
     registerUser(e){
         if(this.mainView.registrationForm.checkValidity()){

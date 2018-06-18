@@ -1,6 +1,6 @@
 <html>
 <head>
-    <title>Match-match game</title>
+    <title>Final game</title>
 </head>
 <body>
     <main>
@@ -18,13 +18,19 @@
         <button id="idBtnStart" >Start</button>
 
         <section class="game-play">
-            <img src="assets/images/game-scene1.png" alt="gamePlayScreen" width="300px" height="188px"/>
-            <img src="assets/images/game-scene2.png" alt="gamePlayScreen" width="300px" height="188px"/>
+            <img class="game-play-img" src="assets/images/game-scene1.png" alt="gamePlayScreen" width="300px" height="188px" data-nr="0"/>
+            <img class="game-play-img" src="assets/images/game-scene2.png" alt="gamePlayScreen" width="300px" height="188px" data-nr="1"/>
         </section>
 
-        <footer>
-            It was written by Olga Dragel
-        </footer>
+        <section class="notification-window not-displayed">
+
+            <div class="container">
+                <span id="idCloseImg" class="close-icon">x</span>
+                <button id="idPrevImg" class="small-button"> < </button>
+                <img src="" class="opened-image" width="600px" height="376px"/>
+                <button id="idNextImg" class="small-button"> > </button>
+            </div>
+        </section>
     </section>
 
     <section class="registration not-displayed">
@@ -66,7 +72,7 @@
     </section>
 
     <section id="spell-window" class="spell-section not-displayed">
-        <h2> Select the magic you lke</h2>
+        <h2> Select the magic you like</h2>
         <ul class="spells">
             <li id="spellFire"><a href=""></a></li>
             <li id="spellLight"><a href=""></a></li>
@@ -100,9 +106,6 @@
                 </ul>
 
             </div>
-
-
-
         </article>
 
         <article id="translateTask" class=" not-displayed">
@@ -165,8 +168,9 @@
 
 
     </main>
-
-
+    <footer>
+        <span >developed by Olga Dragel</span>
+    </footer>
 
 </body>
 </html>

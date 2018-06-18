@@ -49,11 +49,13 @@ main{
     grid-template-columns: 1fr;
     align-items: center;
     justify-items: center;
-    height:100%;
 }
 
 h1{
     color: black;
+    font-family: "Open Sans", sans-serif;
+    font-style: italic;
+    margin-bottom: 17px;
 }
 
 h2 {
@@ -76,11 +78,16 @@ button {
     font-size: 18px;
     margin-top: 30px;
     padding: 5px;
+    border: 1px solid darkred;
     border-radius:5px;
     cursor:pointer;
     user-select: none;
     width: 100px;
     height: 54px;
+}
+
+button:hover{
+    color: darkred;
 }
 
 .simple-content{
@@ -115,3 +122,19 @@ button {
     justify-items: center;
 }
 
+body > main {
+    min-height: calc(100vh - 100px);
+}
+
+body > footer {
+    width: 100%;
+    height: 100px;
+    background: black;
+    color: white;
+    font-family: Lato, sans-serif;
+    font-size: 12px;
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-items: right;
+    align-items: center;
+}
