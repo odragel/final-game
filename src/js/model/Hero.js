@@ -32,7 +32,7 @@ export class Hero {
     init(){
         this.imgHero = new Image();
         this.imgHero.src ="assets/images/boy.png";
-        this.imgHero.onload = this.drawInInitialPosition.bind(this);
+        this.imgHero.addEventListener('load',this.drawInInitialPosition.bind(this));
         this.frameWidth = this.width / this.numOfFrames;
     }
 
@@ -66,12 +66,10 @@ export class Hero {
     }
 
     animate(){
-        this.animateRef = requestAnimationFrame(this.animate.bind(this));
-
         this.update();
         this.clear();
         this.draw();
-
+        this.animateRef = requestAnimationFrame(this.animate.bind(this));
     }
 
     updateScore(value){

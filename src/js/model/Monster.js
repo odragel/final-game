@@ -22,7 +22,7 @@ export class Monster {
         this.determinePartsOfBody();
         this.imgMonster = new Image();
         this.imgMonster.src ="assets/images/monsters-parts.png";
-        this.imgMonster.onload = this.draw.bind(this);
+        this.imgMonster.addEventListener('load',this.draw.bind(this));
     }
 
     determinePartsOfBody(){

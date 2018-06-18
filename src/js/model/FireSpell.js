@@ -1,3 +1,5 @@
+import {AudioEffect} from "./AudioEffect";
+
 export class FireSpell {
     constructor(view, ctx, left, top, participant){
         debugger;
@@ -14,12 +16,11 @@ export class FireSpell {
 
         this.curFrame = 0;
         this.numOfFrames = 5;
-
         this.tickCount = 0;
         this.tickFrame = 6;
 
-
         this.deltaX = 0;
+        this.isSoundPlayed = 0;
 
         this.init();
     }
@@ -29,6 +30,7 @@ export class FireSpell {
         this.img.src ="assets/images/spell-fire.png";
         this.img.onload= this.draw.bind(this);
         this.frameWidth = this.width / this.numOfFrames;
+        this.sound = new AudioEffect(this.view.fireAudio);
 
     }
 
@@ -49,14 +51,20 @@ export class FireSpell {
             this.left = this.left + this.deltaX;
             this.curFrame++;
             if(this.curFrame == this.numOfFrames){
+                this.sound.stop();
                 this.isStopped = 1;
                 cancelAnimationFrame(this.animateRef);
+
 
             }
         }
     }
 
     animate(){
+        if(!this.isSoundPlayed) {
+            this.sound.play();
+        }
+
         this.update();
         this.clear();
         this.participant.draw();

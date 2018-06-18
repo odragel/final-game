@@ -17,6 +17,8 @@ export class MainView{
 
         this.updateCanvasBackground();
 
+        this.fireAudio = document.getElementById("fireAudio");
+
         this.sectionGreeting = document.querySelector('.greeting');
         this.btnStart = document.querySelector('#idBtnStart');
 

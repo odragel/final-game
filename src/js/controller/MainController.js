@@ -1,12 +1,11 @@
 import {MainView} from "../view/MainView";
 import {SpellTaskController} from "./SpellTaskController.js";
+
 import {Monster} from "../model/Monster";
 import {Hero} from "../model/Hero";
 import {FireSpell} from "../model/FireSpell";
 
-
 import * as HINTS from "../constants/hints";
-import * as SETTINGS from "../constants/settings";
 
 import vocabluary from "../../../assets/json/vocabluary.json";
 import {SPELL_FIRE} from "../constants/settings";
@@ -22,14 +21,11 @@ export class MainController{
         this.synth = window.speechSynthesis;
         this.canvas = this.mainView.canvas;
         this.ctx = this.mainView.ctx;
-
-
         this.init();
     }
 
     init(){
         this.addListeners();
-
     }
 
     addListeners(){
@@ -54,6 +50,7 @@ export class MainController{
         this.mainView.btnPlayWithNewNickname.addEventListener('click', this.playWithNewNickName.bind(this));
 
         this.mainView.btnPlayNewGame.addEventListener('click', this.playNewGame.bind(this));
+
     }
 
     registerUser(e){
@@ -235,7 +232,7 @@ export class MainController{
             this.spell.animate();
             this.monster.decreaseHealth();
 
-           setTimeout(this.isRoundFinish.bind(this), 2000);
+           setTimeout(this.isHeroWon.bind(this), 2000);
 
 
         } else {
@@ -245,14 +242,11 @@ export class MainController{
             setTimeout(this.isHeroLost.bind(this), 2000);
         }
 
-
-
-
     }
 
 
 
-    isRoundFinish(){
+    isHeroWon(){
         if(this.monster.isDead()){
 
             this.hero.animate();
@@ -327,8 +321,6 @@ export class MainController{
         this.hero.score = 0;
         this.newRound();
     }
-
-
 
     heroHasLost(){
         cancelAnimationFrame(this.monster.animateRef);
