@@ -2,6 +2,7 @@ import monsters from "../../../assets/json/monsters.json";
 import * as SETTINGS from "../constants/settings";
 
 export class Monster {
+
     constructor(view, ctx) {
         this.health = 100;
         this.view = view;
@@ -30,7 +31,6 @@ export class Monster {
         headIndex = Math.floor(Math.random()* monsters.head.length),
         legsIndex = Math.floor(Math.random()* monsters.legs.length),
         weaponIndex = Math.floor(Math.random()* monsters.weapon.length);
-
 
         this.newName = monsters.weapon[weaponIndex].name+" "+monsters.body[bodyIndex].name +" "+ monsters.head[headIndex].name;
         this.view.updateMonsterName(this.newName);
@@ -63,7 +63,7 @@ export class Monster {
 
 
 
-        this.totalHeight = this.forLegsTop+this.legsHeight - this.legsHeightDeltaY;
+        this.totalHeight = this.bodyHeight+this.legsHeight - this.legsHeightDeltaY;
         this.totalWidth = this.bodyWidth + this.weaponWidth;
 
         this.topBody =  this.canvasHeight - ( 10 + this.totalHeight);
@@ -79,8 +79,6 @@ export class Monster {
             this.headYCoord = this.headYCoord - this.delta;
             this.delta = this.delta * (-1);
         }
-
-
     }
 
     clear(){
@@ -96,7 +94,7 @@ export class Monster {
 
 
         this.ctx.drawImage(this.imgMonster, this.bodyXCoord, this.bodyYCoord, this.bodyWidth, this.bodyHeight,
-            this.leftBody, this.topBody, this.bodyWidth, this.bodyHeight);    //sx, sy, width, height    drawBody
+            this.leftBody, this.topBody, this.bodyWidth, this.bodyHeight);    //drawBody
 
         this.ctx.drawImage(this.imgMonster, this.headXCoord, this.headYCoord, this.headWidth, this.headHeight,
             this.leftBody+this.forHead -this.headWidth/2, this.topBody-this.headHeight+this.headHeightDelta, this.headWidth, this.headHeight);    //drawHead

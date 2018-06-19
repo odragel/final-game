@@ -9,7 +9,7 @@ export const PATTERN = [
 export const SPELL_VALUE = 50;
 
 export const SPELL_FIRE ={
-  monster:{left: 300, top: 370},
+  monster:{left: 300, top: 300},
   hero:{left: 800, top: 270}
 };
 
