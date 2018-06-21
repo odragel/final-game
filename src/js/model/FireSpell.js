@@ -1,4 +1,5 @@
 import {AudioEffect} from "./AudioEffect";
+import * as SETTINGS from "../constants/settings";
 
 export class FireSpell {
     constructor(view, ctx, left, top, participant){
@@ -10,12 +11,12 @@ export class FireSpell {
         this.participant = participant;
 
         this.isStopped = 0;
-        this.height = 185;
-        this.width = 950;
+        this.height = SETTINGS.FIRE_SPELL_IMG_HEIGHT;
+        this.width = SETTINGS.FIRE_SPELL_IMG_WIDTH;
         this.leftCoord = 0
 
         this.curFrame = 0;
-        this.numOfFrames = 5;
+        this.numOfFrames = SETTINGS.FIRE_SPELL_IMG_FRAMES_AMOUNT;
         this.tickCount = 0;
         this.tickFrame = 6;
 
@@ -27,11 +28,10 @@ export class FireSpell {
 
     init(){
         this.img = new Image();
-        this.img.src ="assets/images/spell-fire.png";
+        this.img.src =SETTINGS.FIRE_SPELL_IMG;
         this.img.onload= this.draw.bind(this);
         this.frameWidth = this.width / this.numOfFrames;
         this.sound = new AudioEffect(this.view.fireAudio);
-
     }
 
     draw(){
@@ -44,7 +44,7 @@ export class FireSpell {
         this.ctx.clearRect(this.left, this.top, this.frameWidth, this.height);
     }
 
-    update(){
+    update(resolve, reject){
         this.tickCount++;
         if(this.tickCount > this.tickFrame){
             this.tickCount = 0;
@@ -54,24 +54,23 @@ export class FireSpell {
                 this.sound.stop();
                 this.isStopped = 1;
                 cancelAnimationFrame(this.animateRef);
-
-
+                resolve();
             }
         }
     }
 
-    animate(){
+    animate(resolve, reject){
         if(!this.isSoundPlayed) {
             this.sound.play();
         }
 
-        this.update();
+        this.update(resolve, reject);
         this.clear();
         this.participant.draw();
 
         if(!this.isStopped){
             this.draw();
-            this.animateRef = requestAnimationFrame(this.animate.bind(this));
+            this.animateRef = requestAnimationFrame(this.animate.bind(this, resolve, reject));
         }
     }
 

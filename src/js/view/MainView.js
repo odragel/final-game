@@ -237,6 +237,7 @@ export class MainView{
     }
 
     showAnswerResult(isCorrect){
+
         if(isCorrect){
             this.textAnswerResult.textContent = SETTINGS.CORRECT_ANSWER;
         } else {
@@ -244,6 +245,8 @@ export class MainView{
         }
 
         this.containerAnswerResult.classList.remove('not-displayed');
+
+
     }
 
     hideAnswerResult(){

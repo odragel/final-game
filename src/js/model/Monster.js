@@ -4,12 +4,11 @@ import * as SETTINGS from "../constants/settings";
 export class Monster {
 
     constructor(view, ctx) {
-        this.health = 100;
         this.view = view;
         this.ctx = ctx;
-        this.canvasHeight = 600;
-        this.leftBody = 100;
-        this.health = 100;
+        this.canvasHeight = view.canvasHeight;
+        this.leftBody = SETTINGS.MONSTER_INITIAL_X;
+        this.health = SETTINGS.INITIAL_HEALTH;
         this.isSpellTime = 0;
         this.dead = 0;
 
@@ -22,7 +21,7 @@ export class Monster {
     init(){
         this.determinePartsOfBody();
         this.imgMonster = new Image();
-        this.imgMonster.src ="assets/images/monsters-parts.png";
+        this.imgMonster.src =SETTINGS.MONSTER_IMG;
         this.imgMonster.addEventListener('load',this.draw.bind(this));
     }
 
@@ -43,11 +42,9 @@ export class Monster {
         this.forWeaponTop = +monsters.body[bodyIndex].forWeaponY, this.forWeaponLeft = +monsters.body[bodyIndex].forWeaponX;
 
 
-
         this.headWidth= +monsters.head[headIndex].width, this.headHeight= +monsters.head[headIndex].height,
             this.headXCoord= +monsters.head[headIndex].xCoord, this.headYCoord= +monsters.head[headIndex].yCoord,
             this.headHeightDelta = +monsters.head[headIndex].deltaY[bodyIndex];
-
 
 
         this.legsWidth= +monsters.legs[legsIndex].width, this.legsHeight= +monsters.legs[legsIndex].height,
@@ -55,20 +52,15 @@ export class Monster {
             this.legsHeightDeltaY = +monsters.legs[legsIndex].deltaY[bodyIndex], this.legsWidthDeltaX = +monsters.legs[legsIndex].deltaX[bodyIndex];
 
 
-
         this.weaponWidth= +monsters.weapon[weaponIndex].width, this.weaponHeight= +monsters.weapon[weaponIndex].height,
             this.weaponXCoord= +monsters.weapon[weaponIndex].xCoord, this.weaponYCoord= +monsters.weapon[weaponIndex].yCoord,
             this.weaponDeltaY = +monsters.weapon[weaponIndex].deltaY[bodyIndex];
 
 
-
-
         this.totalHeight = this.bodyHeight+this.legsHeight - this.legsHeightDeltaY;
         this.totalWidth = this.bodyWidth + this.weaponWidth;
 
-        this.topBody =  this.canvasHeight - ( 10 + this.totalHeight);
-
-
+        this.topBody =  this.canvasHeight - ( SETTINGS.MONSTER_INITIAL_Y_DELTA + this.totalHeight);
 
     }
 
@@ -82,7 +74,7 @@ export class Monster {
     }
 
     clear(){
-       this.ctx.clearRect(this.leftBody-20, this.topBody-this.headHeight, this.totalWidth+20, this.totalHeight+this.headHeight+20);
+       this.ctx.clearRect(this.leftBody, this.topBody-this.headHeight, this.totalWidth, this.totalHeight+this.headHeight);
     }
 
     draw(){
@@ -98,8 +90,6 @@ export class Monster {
 
         this.ctx.drawImage(this.imgMonster, this.headXCoord, this.headYCoord, this.headWidth, this.headHeight,
             this.leftBody+this.forHead -this.headWidth/2, this.topBody-this.headHeight+this.headHeightDelta, this.headWidth, this.headHeight);    //drawHead
-
-
 
     }
 

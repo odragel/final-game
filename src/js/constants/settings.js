@@ -16,3 +16,20 @@ export const SPELL_FIRE ={
 export const CORRECT_ANSWER = "Your answer is correct";
 export const INCORRECT_ANSWER = "Your answer is wrong";
 
+export const INITIAL_HEALTH = 100;
+export const MONSTER_INITIAL_X = 100;
+export const MONSTER_INITIAL_Y_DELTA = 10;
+export const MONSTER_IMG="assets/images/monsters-parts.png";
+
+
+export const HERO_INITIAL_X = 900;
+export const HERO_INITIAL_Y = 270;
+export const HERO_IMG = "assets/images/boy.png";
+export const HERO_IMG_HEIGHT = 157;
+export const HERO_IMG_WIDTH = 680;
+export const HERO_IMG_FRAMES_AMOUNT = 5;
+
+export const FIRE_SPELL_IMG = "assets/images/spell-fire.png";
+export const FIRE_SPELL_IMG_HEIGHT = 185;
+export const FIRE_SPELL_IMG_WIDTH = 950;
+export const FIRE_SPELL_IMG_FRAMES_AMOUNT = 5;

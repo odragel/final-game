@@ -2,25 +2,22 @@ import * as SETTINGS from "../constants/settings";
 
 export class Hero {
     constructor(view, ctx, name){
-        this.health = 100;
+        this.health = SETTINGS.INITIAL_HEALTH;
 
         this.view = view;
         this.ctx = ctx;
         this.name = name;
-        this.health = 100;
         this.score = 0;
 
-        this.top = 270;
-        this.left = 900;
+        this.top = SETTINGS.HERO_INITIAL_Y;
+        this.left = SETTINGS.HERO_INITIAL_X;
 
-        this.height = 157;
-        this.width = 680;
+        this.height = SETTINGS.HERO_IMG_HEIGHT;
+        this.width = SETTINGS.HERO_IMG_WIDTH;
         this.leftCoord = 0
 
         this.curFrame = 0;
-        this.numOfFrames = 5;
-
-
+        this.numOfFrames = SETTINGS.HERO_IMG_FRAMES_AMOUNT;
 
         this.tickCount = 0;
         this.tickFrame = 5;
@@ -31,14 +28,15 @@ export class Hero {
 
     init(){
         this.imgHero = new Image();
-        this.imgHero.src ="assets/images/boy.png";
+        this.imgHero.src =SETTINGS.HERO_IMG
         this.imgHero.addEventListener('load',this.drawInInitialPosition.bind(this));
         this.frameWidth = this.width / this.numOfFrames;
     }
 
     drawInInitialPosition(){
-        this.top = 270;
-        this.left = 900;
+        this.top = SETTINGS.HERO_INITIAL_Y;
+        this.left = SETTINGS.HERO_INITIAL_X;
+
         this.curFrame = 0;
         this.ctx.drawImage(this.imgHero, this.leftCoord + this.frameWidth * this.curFrame , 0, this.frameWidth, this.height,
             this.left, this.top, this.width/this.numOfFrames, this.height);

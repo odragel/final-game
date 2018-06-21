@@ -10,6 +10,8 @@ import * as HINTS from "../constants/hints";
 import vocabluary from "../../../assets/json/vocabluary.json";
 import {SPELL_FIRE} from "../constants/settings";
 
+require('es6-promise/auto');
+
 export class MainController{
 
     constructor(){
@@ -76,8 +78,6 @@ export class MainController{
     showPrevImg(){
         this.mainView.prevImage();
     }
-
-
 
     registerUser(e){
         if(this.mainView.registrationForm.checkValidity()){
@@ -251,21 +251,34 @@ export class MainController{
         this.hideTask();
 
         this.mainView.showAnswerResult(result);
-        setTimeout(this.mainView.hideAnswerResult.bind(this.mainView), 1000);
+        this.mainView.hideAnswerResult();
+
+
+
 
         if(result){
             this.spell = new FireSpell(this.mainView, this.ctx, SPELL_FIRE.monster.left, SPELL_FIRE.monster.top, this.monster);
-            this.spell.animate();
             this.monster.decreaseHealth();
 
-           setTimeout(this.isHeroWon.bind(this), 2000);
+            let p = new Promise((resolve,reject) => this.spell.animate(resolve, reject));
+            p.then(
+                this.isHeroWon.bind(this)
+            );
+
+//           setTimeout(this.isHeroWon.bind(this), 2000);
 
 
         } else {
             this.spell = new FireSpell(this.mainView, this.ctx, SPELL_FIRE.hero.left, SPELL_FIRE.hero.top, this.hero);
-            this.spell.animate();
+         //   this.spell.animate();
             this.hero.decreaseHealth();
-            setTimeout(this.isHeroLost.bind(this), 2000);
+         //   setTimeout(this.isHeroLost.bind(this), 2000);
+
+            let p = new Promise((resolve,reject) => this.spell.animate(resolve, reject));
+            p.then(
+                this.isHeroLost.bind(this)
+            );
+
         }
 
     }
@@ -282,7 +295,6 @@ export class MainController{
             this.mainView.showCongratulations();
 
         } else{
-
             this.mainView.showSpellSection();
         }
     }
@@ -336,7 +348,6 @@ export class MainController{
         this.mainView.hideCongratulations();
         this.mainView.hideGameScreen();
         this.mainView.emptyNickField();
-
         this.showRegistration();
 
     }
